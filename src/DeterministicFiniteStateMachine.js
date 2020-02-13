@@ -23,10 +23,11 @@ export default class DeterministicFiniteStateMachine {
   }
 
 
-  accept(string,state=this.startState)
+  accepts(string,state=this.startState)
   {
     const nextState = this.transition(state,string.charAt((0)));
-    return 
+    return (string.length === 0) ? this.isAcceptState(state):
+                                    this.accepts(string.substr(1),nextState);
 
 
   }
@@ -36,9 +37,7 @@ export default class DeterministicFiniteStateMachine {
     if(string.length === 0)
     {
         return this.isAcceptState(state);
-
     }else{
-
         const nextState = this.transition(state,string.charAt(0));
         return this.accepts(string.substr(1),nextState);
     }
